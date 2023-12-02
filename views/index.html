@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Storage App</title>
+</head>
+<body>
+  <h1>Cloud Storage App</h1>
+  <div>
+    <label for="folderName">New Folder Name:</label>
+    <input type="text" id="folderName" />
+    <button onclick="createFolder()">Create Folder</button>
+  </div>
+  <div id="folders"></div>
+
+  <script>
+    async function createFolder() {
+      const folderName = document.getElementById('folderName').value;
+      const response = await fetch('/folders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ folderName }),
+      });
+
+      const newFolder = await response.json();
+      displayFolder(newFolder);
+    }
+
+    async function fetchFolders() {
+      const response = await fetch('/folders');
+      const folders = await response.json();
+      folders.forEach(displayFolder);
+    }
+
+    function displayFolder(folder) {
+      const folderElement = document.createElement('div');
+      folderElement.className = 'folder';
+      folderElement.textContent = folder.name;
+      folderElement.addEventListener('click', () => redirectToFolder(folder.id, folder.name));
+      document.getElementById('folders').appendChild(folderElement);
+    }
+
+    redirectToFolder = (folderId, folderName) => {
+      window.location.href = `/folders/${folderId}/${folderName}`;
+    }
+
+    fetchFolders();
+  </script>
+</body>
+</html>
