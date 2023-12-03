@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Folder Page</title>
+</head>
+<body>
+
+<div class="files">
+  <h2>Files in <%= folder.name %></h2>
+  <% folder.files.forEach(file => { %>
+    <div><%= file.name %> (Size: <%= file.size %> bytes, Last Modified: <%= file.lastModified %>)</div>
+  <% }); %>
+</div>
+
+</body>
+</html>

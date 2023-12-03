@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cloud Storage App</title>
 </head>
+
 <body>
   <h1>Cloud Storage App</h1>
   <div>
@@ -35,19 +37,21 @@
       folders.forEach(displayFolder);
     }
 
-    function displayFolder(folder) {
-      const folderElement = document.createElement('div');
-      folderElement.className = 'folder';
-      folderElement.textContent = folder.name;
-      folderElement.addEventListener('click', () => redirectToFolder(folder.id, folder.name));
-      document.getElementById('folders').appendChild(folderElement);
-    }
+  function redirectToFolder(folderId, folderName) {
+    window.location.href = `/folders/${folderId}/${folderName}`;
+  }
 
-    redirectToFolder = (folderId, folderName) => {
-      window.location.href = `/folders/${folderId}/${folderName}`;
-    }
+  function displayFolder(folder) {
+    const folderElement = document.createElement('div');
+    folderElement.className = 'folder';
+    folderElement.textContent = folder.name;
+    folderElement.addEventListener('click', () => redirectToFolder(folderId, folderName));
+    fetchAndDisplayFiles(folder.id, folder.name);
+    document.getElementById('folders').appendChild(folderElement);
+  }
 
-    fetchFolders();
+  fetchFolders();
   </script>
 </body>
+
 </html>
