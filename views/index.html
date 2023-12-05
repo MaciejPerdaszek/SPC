@@ -37,19 +37,15 @@
       folders.forEach(displayFolder);
     }
 
-  function redirectToFolder(folderId, folderName) {
-    window.location.href = `/folders/${folderId}/${folderName}`;
-  }
+    function displayFolder(folder) {
+      const folderElement = document.createElement('div');
+      folderElement.className = 'folder';
+      folderElement.textContent = folder.name;
+      folderElement.addEventListener('click', () => { window.location.href = `/folders/${folder.id}/${folder.name}` });
+      document.getElementById('folders').appendChild(folderElement);
+    }
 
-  function displayFolder(folder) {
-    const folderElement = document.createElement('div');
-    folderElement.className = 'folder';
-    folderElement.textContent = folder.name;
-    folderElement.addEventListener('click', () => redirectToFolder(folder.id, folder.name));
-    document.getElementById('folders').appendChild(folderElement);
-  }
-
-  fetchFolders();
+    fetchFolders();
   </script>
 </body>
 

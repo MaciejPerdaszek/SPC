@@ -1,18 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Folder Page</title>
 </head>
+
 <body>
 
-<div class="files">
-  <h2>Files in <%= folder.name %></h2>
-  <% folder.files.forEach(file => { %>
-    <div><%= file.name %> (Size: <%= file.size %> bytes, Last Modified: <%= file.lastModified %>)</div>
-  <% }); %>
-</div>
+  <div class="files">
+    <h2>Files in <%= folder.name %>
+    </h2>
+    <% folder.files.forEach(file=> { %>
+      <div class="file" file-id="<%= file.id %>" file-name="<%= file.name %>">
+        <%= file.name %> (Size: <%= file.size %> bytes, Last Modified: <%= file.lastModified %> ID: <%= file.id %>)
+      </div>
+      <% }); %>
+  </div>
+
+  <script>
+
+    var fileElements = document.querySelectorAll('.file');
+    const folderId = '<%= folder.id %>';
+    const folderName = '<%= folder.name %>';
+
+    fileElements.forEach(function (fileElement) {
+      fileElement.addEventListener('click', () => {
+        console.log('File clicked. ID: ' + fileElement.getAttribute('file-id'));
+        window.location.href = `/files/${folderId}/${folderName}/${fileElement.getAttribute('file-id')}/${fileElement.getAttribute('file-name')}`;
+      });
+    });
+  </script>
 
 </body>
+
 </html>

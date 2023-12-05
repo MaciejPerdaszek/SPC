@@ -8,8 +8,8 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set('views', path.join(__dirname, 'views')); 
-app.set('view engine', 'ejs');  
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 const folders = [];
 
@@ -39,7 +39,7 @@ app.post('/folders', (req, res) => {
                 name: fileName,
                 content: fileContent,
                 size: fileStats.size,
-                lastModified: fileStats.mtime
+                lastModified: fileStats.mtime,
             };
 
             newFolder.files.push(newFile);
@@ -63,6 +63,20 @@ app.get('/folders/:id/:name', (req, res) => {
     } else {
         res.send('Folder not found').status(404);
     }
+});
+
+app.get('/files/:folderId/:folderName/:fileId/:fileName', (req, res) => {
+    const folderid = req.params.folderId;
+    const folder = folders.find(folder => folder.id == folderid);
+    const fileid = req.params.fileId;
+    const file = folder.files[fileid - 1];
+    console.log(file);
+    if (file) {
+        res.render('file', { file });
+    } else {
+        res.send('File not found').status(404);
+    }
+    //res.send("Test");
 });
 
 app.listen(port, () => {
